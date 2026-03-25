@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { readProducts, createProduct } from "@/lib/db";
 import { cookies } from "next/headers";
 
-function isAdmin() {
-  const cookieStore = cookies();
+async function isAdmin() {
+  const cookieStore = await cookies();
   return cookieStore.get("admin_token")?.value === process.env.ADMIN_SECRET;
 }
 
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAdmin()) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const body = await req.json();
