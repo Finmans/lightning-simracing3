@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" fill="none">
+  <!-- LIGHTNING text -->
+  <text x="20" y="62" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="white" letter-spacing="2">LIGH</text>
+  <!-- Lightning bolt replacing T -->
+  <path d="M225 8 L210 52 L228 52 L208 108 L248 45 L230 45 L250 8 Z" fill="#3B82F6"/>
+  <text x="248" y="62" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="white" letter-spacing="2">NING</text>
+  <!-- SIMRACING text -->
+  <rect x="120" y="72" width="260" height="38" rx="4" fill="#1D4ED8" opacity="0.9"/>
+  <text x="250" y="100" font-family="Arial Black, sans-serif" font-weight="900" font-size="30" fill="#3B82F6" text-anchor="middle" letter-spacing="6">SIMRACING</text>
+</svg>

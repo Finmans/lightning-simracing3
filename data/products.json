@@ -1,0 +1,365 @@
+[
+  {
+    "id": "p001",
+    "title": "Fanatec GT DD Pro 8Nm Bundle",
+    "brand": "Fanatec",
+    "category": "bundle",
+    "type": "sale",
+    "condition": "like-new",
+    "salePrice": 32900,
+    "originalPrice": 42900,
+    "rentPricePerDay": null,
+    "rentPricePerWeek": null,
+    "rentPricePerMonth": null,
+    "description": "ชุด Fanatec GT DD Pro สภาพเหมือนใหม่ ใช้งานไม่ถึง 3 เดือน ครบชุดพร้อมเล่น รวม Clubsport V3 และ NLR GT Elite",
+    "features": [
+      "Direct Drive 8Nm",
+      "Clubsport V3 Pedals (LoadCell)",
+      "NLR GT Elite Cockpit",
+      "34\" UltraWide 165Hz",
+      "ประกันยังเหลืออยู่"
+    ],
+    "specs": {
+      "Wheel Base": "Fanatec GT DD Pro 8Nm",
+      "Pedals": "Fanatec Clubsport V3",
+      "Cockpit": "NLR GT Elite",
+      "Monitor": "34\" 165Hz UltraWide",
+      "Max Torque": "8Nm"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1636036704268-017faa3b6557?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1752959807835-3af0030dc3a9?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": true,
+    "stockQuantity": 1,
+    "views": 127,
+    "createdAt": "2025-03-01T00:00:00.000Z",
+    "updatedAt": "2025-03-01T00:00:00.000Z"
+  },
+  {
+    "id": "p002",
+    "title": "Simagic Alpha Mini 10Nm",
+    "brand": "Simagic",
+    "category": "wheel-base",
+    "type": "sale",
+    "condition": "good",
+    "salePrice": 18500,
+    "originalPrice": 26900,
+    "rentPricePerDay": null,
+    "rentPricePerWeek": null,
+    "rentPricePerMonth": null,
+    "description": "Simagic Alpha Mini สภาพดี Direct Drive 10Nm ใช้กับ PC และ PS5 ได้ มี FFB แรงมาก เหมาะสำหรับคนอยากอัปเกรดจาก Gear-Drive",
+    "features": [
+      "Direct Drive 10Nm",
+      "รองรับ PC + PS5",
+      "Quick Release included",
+      "Simagic M10 Wheel included",
+      "มี Original Box"
+    ],
+    "specs": {
+      "Max Torque": "10Nm",
+      "Motor Type": "Direct Drive",
+      "Connection": "USB",
+      "Compatibility": "PC, PS5"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": true,
+    "stockQuantity": 1,
+    "views": 89,
+    "createdAt": "2025-03-05T00:00:00.000Z",
+    "updatedAt": "2025-03-05T00:00:00.000Z"
+  },
+  {
+    "id": "p003",
+    "title": "Moza R9 V2 9Nm + CRP Pedals",
+    "brand": "Moza",
+    "category": "bundle",
+    "type": "sale",
+    "condition": "like-new",
+    "salePrice": 24900,
+    "originalPrice": 31900,
+    "rentPricePerDay": null,
+    "rentPricePerWeek": null,
+    "rentPricePerMonth": null,
+    "description": "Moza R9 V2 + CRP Pedals ครบชุด สภาพเหมือนใหม่ ใช้งาน 2 เดือน รวม ES Steering Wheel ด้วย",
+    "features": [
+      "Direct Drive 9Nm",
+      "CRP Load Cell Pedals",
+      "ES Formula Wheel",
+      "Moza Pit House Software",
+      "USB Hub included"
+    ],
+    "specs": {
+      "Wheel Base": "Moza R9 V2",
+      "Pedals": "CRP 3-Pedal Set",
+      "Wheel": "Moza ES Steering Wheel",
+      "Max Torque": "9Nm"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1760553121003-93afc4d88ae0?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": true,
+    "stockQuantity": 1,
+    "views": 64,
+    "createdAt": "2025-03-08T00:00:00.000Z",
+    "updatedAt": "2025-03-08T00:00:00.000Z"
+  },
+  {
+    "id": "p004",
+    "title": "Logitech G923 TrueForce + Pedals",
+    "brand": "Logitech",
+    "category": "bundle",
+    "type": "sale",
+    "condition": "good",
+    "salePrice": 8900,
+    "originalPrice": 13900,
+    "rentPricePerDay": null,
+    "rentPricePerWeek": null,
+    "rentPricePerMonth": null,
+    "description": "Logitech G923 ชุดมือสอง สภาพดี เหมาะสำหรับมือใหม่ ราคาคุ้มค่า TrueForce Feedback",
+    "features": [
+      "TrueForce Haptic Feedback",
+      "3-Pedal Set",
+      "รองรับ PC + PS5",
+      "Shift Paddles",
+      "900° Rotation"
+    ],
+    "specs": {
+      "Feedback": "TrueForce (Gear-Drive)",
+      "Rotation": "900°",
+      "Pedals": "3-Pedal (Clutch, Brake, Gas)",
+      "Compatibility": "PC, PS4, PS5"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1609710228159-0fa9bd7c0827?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": false,
+    "stockQuantity": 2,
+    "views": 203,
+    "createdAt": "2025-02-20T00:00:00.000Z",
+    "updatedAt": "2025-02-20T00:00:00.000Z"
+  },
+  {
+    "id": "p005",
+    "title": "NLR GT Elite Cockpit",
+    "brand": "Next Level Racing",
+    "category": "cockpit",
+    "type": "sale",
+    "condition": "good",
+    "salePrice": 15900,
+    "originalPrice": 22900,
+    "rentPricePerDay": null,
+    "rentPricePerWeek": null,
+    "rentPricePerMonth": null,
+    "description": "Next Level Racing GT Elite Cockpit ใช้งานได้กับทุก wheel/pedal set ปรับระดับได้หมด",
+    "features": [
+      "Adjustable Seat Position",
+      "Universal Wheel Mount",
+      "Pedal Plate included",
+      "Monitor Mount Option",
+      "Weight Capacity 120kg"
+    ],
+    "specs": {
+      "Material": "Steel Frame",
+      "Max Load": "120kg",
+      "Adjustment": "Full Adjustable",
+      "Compatibility": "Universal"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": false,
+    "stockQuantity": 1,
+    "views": 45,
+    "createdAt": "2025-03-10T00:00:00.000Z",
+    "updatedAt": "2025-03-10T00:00:00.000Z"
+  },
+  {
+    "id": "p006",
+    "title": "Fanatec Clubsport V3 Pedals",
+    "brand": "Fanatec",
+    "category": "pedals",
+    "type": "sale",
+    "condition": "like-new",
+    "salePrice": 12500,
+    "originalPrice": 17900,
+    "rentPricePerDay": null,
+    "rentPricePerWeek": null,
+    "rentPricePerMonth": null,
+    "description": "Fanatec Clubsport V3 Pedals สภาพเหมือนใหม่ มี Load Cell Brake ความแม่นยำสูง",
+    "features": [
+      "Load Cell Brake",
+      "Vibration Motor",
+      "Adjustable Brake Force",
+      "Aluminum Pedal Faces",
+      "USB Direct Connection"
+    ],
+    "specs": {
+      "Brake Type": "Load Cell",
+      "Pedals": "3-Pedal (Clutch, Brake, Gas)",
+      "Material": "Aluminum + Steel",
+      "Connection": "USB"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": false,
+    "stockQuantity": 1,
+    "views": 58,
+    "createdAt": "2025-03-12T00:00:00.000Z",
+    "updatedAt": "2025-03-12T00:00:00.000Z"
+  },
+  {
+    "id": "p007",
+    "title": "Fanatec CSL DD+ 15Nm ชุดสมบูรณ์",
+    "brand": "Fanatec",
+    "category": "bundle",
+    "type": "rent",
+    "condition": "new",
+    "salePrice": null,
+    "originalPrice": null,
+    "rentPricePerDay": 1200,
+    "rentPricePerWeek": 6500,
+    "rentPricePerMonth": 20000,
+    "description": "ชุดเช่า Fanatec CSL DD+ 15Nm พร้อม GT3 V2 Wheel และ CSL Load Cell Pedals ครบชุด จัดส่งติดตั้งถึงบ้าน",
+    "features": [
+      "Direct Drive 15Nm",
+      "CSL DD+ Boost Kit",
+      "GT3 V2 Steering Wheel",
+      "CSL Load Cell Pedals",
+      "จัดส่ง+ติดตั้งฟรี"
+    ],
+    "specs": {
+      "Wheel Base": "Fanatec CSL DD+ 15Nm",
+      "Wheel": "GT3 V2",
+      "Pedals": "CSL Load Cell",
+      "Max Torque": "15Nm"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1570352481356-e633565f3b5c?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": true,
+    "stockQuantity": 3,
+    "views": 76,
+    "createdAt": "2025-03-15T00:00:00.000Z",
+    "updatedAt": "2025-03-15T00:00:00.000Z"
+  },
+  {
+    "id": "p008",
+    "title": "Samsung 32\" Odyssey G5 165Hz Curved",
+    "brand": "Samsung",
+    "category": "monitor",
+    "type": "sale",
+    "condition": "like-new",
+    "salePrice": 11900,
+    "originalPrice": 16900,
+    "rentPricePerDay": null,
+    "rentPricePerWeek": null,
+    "rentPricePerMonth": null,
+    "description": "Samsung Odyssey G5 32\" 165Hz 1440p Curved VA Panel เหมาะสำหรับ Sim Racing มาก",
+    "features": [
+      "32\" 1440p (QHD)",
+      "165Hz Refresh Rate",
+      "1ms Response Time",
+      "VA Curved Panel",
+      "FreeSync Premium"
+    ],
+    "specs": {
+      "Size": "32 inch",
+      "Resolution": "2560x1440 (QHD)",
+      "Refresh Rate": "165Hz",
+      "Panel": "VA Curved",
+      "Response Time": "1ms"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": false,
+    "stockQuantity": 1,
+    "views": 92,
+    "createdAt": "2025-03-18T00:00:00.000Z",
+    "updatedAt": "2025-03-18T00:00:00.000Z"
+  },
+  {
+    "id": "p009",
+    "title": "Moza R5 Bundle + SR-P Pedals",
+    "brand": "Moza",
+    "category": "bundle",
+    "type": "rent",
+    "condition": "new",
+    "salePrice": null,
+    "originalPrice": null,
+    "rentPricePerDay": 800,
+    "rentPricePerWeek": 4500,
+    "rentPricePerMonth": 14000,
+    "description": "ชุดเช่า Moza R5 + SR-P Pedals สภาพใหม่ เหมาะสำหรับผู้เริ่มต้นถึงระดับกลาง จัดส่งถึงบ้าน",
+    "features": [
+      "Direct Drive 5.5Nm",
+      "SR-P 3-Pedal Set",
+      "ES Steering Wheel",
+      "Moza Pit House",
+      "จัดส่ง+ติดตั้งฟรี"
+    ],
+    "specs": {
+      "Wheel Base": "Moza R5 5.5Nm",
+      "Pedals": "SR-P 3-Pedal",
+      "Wheel": "ES Steering Wheel",
+      "Max Torque": "5.5Nm"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1597334948548-88e11f75a946?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": true,
+    "stockQuantity": 2,
+    "views": 34,
+    "createdAt": "2025-03-20T00:00:00.000Z",
+    "updatedAt": "2025-03-20T00:00:00.000Z"
+  },
+  {
+    "id": "p010",
+    "title": "Logitech G923 + NLR GT Lite Cockpit",
+    "brand": "Logitech",
+    "category": "bundle",
+    "type": "rent",
+    "condition": "good",
+    "salePrice": null,
+    "originalPrice": null,
+    "rentPricePerDay": 500,
+    "rentPricePerWeek": 2800,
+    "rentPricePerMonth": 9000,
+    "description": "ชุดเช่าระดับเริ่มต้น Logitech G923 + Cockpit ครบชุด เหมาะสำหรับทดลองเล่นก่อนตัดสินใจซื้อ",
+    "features": [
+      "TrueForce Feedback",
+      "GT Lite Cockpit",
+      "3-Pedal Set",
+      "รองรับ PC + PS5",
+      "จัดส่งฟรี กทม."
+    ],
+    "specs": {
+      "Wheel": "Logitech G923",
+      "Cockpit": "NLR GT Lite",
+      "Pedals": "3-Pedal",
+      "Compatibility": "PC, PS4, PS5"
+    },
+    "images": [
+      "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800&auto=format&fit=crop"
+    ],
+    "status": "active",
+    "featured": false,
+    "stockQuantity": 2,
+    "views": 21,
+    "createdAt": "2025-03-22T00:00:00.000Z",
+    "updatedAt": "2025-03-22T00:00:00.000Z"
+  }
+]

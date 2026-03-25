@@ -46,75 +46,51 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Lightning SimRacing brand colors */
+  --color-brand-blue: #3B82F6;
+  --color-brand-blue-light: #60A5FA;
+  --color-brand-blue-dark: #1D4ED8;
+  --color-brand-cyan: #38BDF8;
+  --color-brand-orange: #F59E0B;
+  --color-racing-dark: #000000;
+  --color-racing-panel: #0A0A1A;
+  --color-racing-border: #1A1A2E;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: #000000;
+  --foreground: #E4E4E7;
+  --card: #0A0A1A;
+  --card-foreground: #E4E4E7;
+  --popover: #0A0A1A;
+  --popover-foreground: #E4E4E7;
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #111128;
+  --secondary-foreground: #E4E4E7;
+  --muted: #111128;
+  --muted-foreground: #A1A1AA;
+  --accent: #60A5FA;
+  --accent-foreground: #000000;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --border: #1A1A2E;
+  --input: #1A1A2E;
+  --ring: #3B82F6;
+  --chart-1: #3B82F6;
+  --chart-2: #60A5FA;
+  --chart-3: #F59E0B;
+  --chart-4: #8B5CF6;
+  --chart-5: #38BDF8;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar: #0A0A1A;
+  --sidebar-foreground: #E4E4E7;
+  --sidebar-primary: #3B82F6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #111128;
+  --sidebar-accent-foreground: #E4E4E7;
+  --sidebar-border: #1A1A2E;
+  --sidebar-ring: #3B82F6;
 }
 
 @layer base {
@@ -123,8 +99,203 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-color: #000000;
+    color: #E4E4E7;
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
 }
+
+/* ── Brand glow effects ── */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4), 0 0 60px rgba(59, 130, 246, 0.15);
+}
+.glow-blue-lg {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 80px rgba(59, 130, 246, 0.2);
+}
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3), 0 0 40px rgba(56, 189, 248, 0.1);
+}
+.glow-orange {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), 0 0 40px rgba(245, 158, 11, 0.1);
+}
+.text-glow-blue {
+  text-shadow: 0 0 12px rgba(59, 130, 246, 0.7), 0 0 30px rgba(59, 130, 246, 0.4);
+}
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6), 0 0 20px rgba(56, 189, 248, 0.3);
+}
+.text-glow-white {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* ── Dashed borders ── */
+.racing-border {
+  border: 1px dashed #1A1A2E;
+}
+.racing-border-blue {
+  border: 1px dashed rgba(59, 130, 246, 0.4);
+}
+.racing-border-cyan {
+  border: 1px dashed rgba(56, 189, 248, 0.4);
+}
+.racing-border-orange {
+  border: 1px dashed rgba(245, 158, 11, 0.4);
+}
+
+/* ── HUD grid background ── */
+.hud-grid-bg {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* ── Price monospace ── */
+.price-mono {
+  font-family: 'Courier New', Courier, monospace;
+  color: #3B82F6;
+}
+
+/* ── 3D card perspective ── */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* ── Brand gradient ── */
+.brand-gradient {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 50%, #60A5FA 100%);
+}
+.brand-gradient-text {
+  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Animated gradient border ── */
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(59, 130, 246, 0.3); }
+  50% { border-color: rgba(59, 130, 246, 0.7); }
+}
+.animate-border-glow {
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+/* ── Pulse glow ── */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.5), 0 0 80px rgba(59, 130, 246, 0.2); }
+}
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* ── 3D Ring rotation ── */
+@keyframes ring-spin-x {
+  from { transform: rotateX(0deg) rotateY(20deg); }
+  to   { transform: rotateX(360deg) rotateY(20deg); }
+}
+@keyframes ring-spin-y {
+  from { transform: rotateY(0deg) rotateX(60deg); }
+  to   { transform: rotateY(360deg) rotateX(60deg); }
+}
+@keyframes ring-spin-z {
+  from { transform: rotateZ(0deg) rotateX(80deg); }
+  to   { transform: rotateZ(360deg) rotateX(80deg); }
+}
+.ring-x { animation: ring-spin-x 18s linear infinite; }
+.ring-y { animation: ring-spin-y 24s linear infinite; }
+.ring-z { animation: ring-spin-z 30s linear infinite; }
+
+/* ── Scan line sweep ── */
+@keyframes scanSweep {
+  0%   { top: -2px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.scan-line {
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), rgba(56,189,248,0.8), rgba(59,130,246,0.6), transparent);
+  animation: scanSweep 6s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(59,130,246,0.8);
+}
+
+/* ── Holographic shimmer ── */
+@keyframes holoShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.holo-shimmer {
+  background: linear-gradient(105deg,
+    transparent 20%,
+    rgba(59,130,246,0.15) 30%,
+    rgba(56,189,248,0.2) 50%,
+    rgba(59,130,246,0.15) 70%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  animation: holoShimmer 3s linear infinite;
+}
+
+/* ── Depth star field ── */
+@keyframes starFloat {
+  0%   { transform: translateZ(0px) scale(1); opacity: 0.3; }
+  50%  { transform: translateZ(60px) scale(1.4); opacity: 1; }
+  100% { transform: translateZ(0px) scale(1); opacity: 0.3; }
+}
+
+/* ── Ambient light beam ── */
+@keyframes beamPulse {
+  0%, 100% { opacity: 0.04; transform: skewX(-15deg) scaleX(1); }
+  50%       { opacity: 0.12; transform: skewX(-15deg) scaleX(1.1); }
+}
+.light-beam {
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(59,130,246,0.6), rgba(56,189,248,0.4), transparent);
+  animation: beamPulse 4s ease-in-out infinite;
+}
+
+/* ── 3D Grid perspective floor ── */
+.grid-floor {
+  background-image:
+    linear-gradient(rgba(59,130,246,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.15) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: perspective(400px) rotateX(65deg) scaleY(2.5);
+  transform-origin: bottom center;
+}
+
+/* ── Card 3D tilt container ── */
+.card-3d-wrap {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* ── Floating animation variants ── */
+@keyframes float-a {
+  0%,100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  33%      { transform: translateY(-18px) translateX(8px) rotate(1deg); }
+  66%      { transform: translateY(8px) translateX(-8px) rotate(-1deg); }
+}
+@keyframes float-b {
+  0%,100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  33%      { transform: translateY(14px) translateX(-10px) rotate(-1.5deg); }
+  66%      { transform: translateY(-10px) translateX(12px) rotate(1.5deg); }
+}
+.float-a { animation: float-a 7s ease-in-out infinite; }
+.float-b { animation: float-b 9s ease-in-out infinite; }
+
+/* ── Pulsing ring ── */
+@keyframes ringPulse {
+  0%,100% { transform: scale(1); opacity: 0.15; }
+  50%     { transform: scale(1.08); opacity: 0.35; }
+}
+.ring-pulse { animation: ringPulse 3s ease-in-out infinite; }
