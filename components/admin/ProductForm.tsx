@@ -38,6 +38,7 @@ export default function ProductForm({ mode, initialData }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const [form, setForm] = useState(() => {
     if (initialData) {
@@ -66,13 +67,31 @@ export default function ProductForm({ mode, initialData }: Props) {
 
   async function handleImageUpload(files: FileList) {
     setUploading(true);
+    setUploadError(null);
     for (const file of Array.from(files)) {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
-      if (res.ok) {
-        const { url } = await res.json();
-        setForm((prev) => ({ ...prev, images: [...prev.images, url] }));
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setUploadError(`ไฟล์ ${file.name} ใหญ่เกินไป (สูงสุด 5MB)`);
+        setUploading(false);
+        return;
+      }
+      try {
+        const fd = new FormData();
+        fd.append("file", file);
+        const res = await fetch("/api/upload", { method: "POST", body: fd });
+        if (res.ok) {
+          const { url } = await res.json();
+          setForm((prev) => ({ ...prev, images: [...prev.images, url] }));
+        } else {
+          const data = await res.json().catch(() => ({}));
+          if (res.status === 401) {
+            setUploadError("ไม่มีสิทธิ์อัพโหลด — กรุณา Login ใหม่อีกครั้ง");
+          } else {
+            setUploadError(data.error || `อัพโหลดล้มเหลว (${res.status})`);
+          }
+        }
+      } catch {
+        setUploadError("เกิดข้อผิดพลาด — ไม่สามารถเชื่อมต่อกับ server ได้");
       }
     }
     setUploading(false);
@@ -259,7 +278,16 @@ export default function ProductForm({ mode, initialData }: Props) {
           className="hidden"
           onChange={(e) => e.target.files && handleImageUpload(e.target.files)}
         />
-        <p className="text-xs text-[#374151]">รองรับ JPG, PNG, WebP รูปแรกจะเป็นรูปหลัก</p>
+        {uploadError && (
+          <div className="mt-2 flex items-center gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+            <X className="w-4 h-4 flex-shrink-0" />
+            <span>{uploadError}</span>
+            <button type="button" onClick={() => setUploadError(null)} className="ml-auto text-red-400 hover:text-red-300">
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        )}
+        <p className="text-xs text-[#374151] mt-2">รองรับ JPG, PNG, WebP — ขนาดสูงสุด 5MB รูปแรกจะเป็นรูปหลัก</p>
       </div>
 
       {/* Features */}
