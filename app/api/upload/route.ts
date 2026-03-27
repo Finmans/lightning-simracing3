@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
   const cookieStore = await cookies();
@@ -24,19 +23,26 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "ไฟล์ต้องเป็น JPG, PNG, WebP หรือ GIF เท่านั้น" }, { status: 400 });
   }
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
   const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
   const filename = `${Date.now()}.${ext}`;
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
-  const uploadPath = path.join(uploadDir, filename);
 
-  try {
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(uploadPath, buffer);
-    return NextResponse.json({ url: `/uploads/${filename}` });
-  } catch (err) {
-    console.error("Upload error:", err);
-    return NextResponse.json({ error: "ไม่สามารถบันทึกไฟล์ได้ — อาจเกิดจาก server ไม่อนุญาตเขียนไฟล์" }, { status: 500 });
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  const { data, error } = await supabaseAdmin.storage
+    .from("images")
+    .upload(filename, buffer, {
+      contentType: file.type,
+      upsert: false,
+    });
+
+  if (error) {
+    console.error("Upload error:", error);
+    return NextResponse.json({ error: "ไม่สามารถอัพโหลดไฟล์ได้: " + error.message }, { status: 500 });
   }
+
+  // Get public URL
+  const { data: urlData } = supabaseAdmin.storage.from("images").getPublicUrl(filename);
+
+  return NextResponse.json({ url: urlData.publicUrl });
 }
