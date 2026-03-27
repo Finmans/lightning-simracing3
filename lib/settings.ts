@@ -1,7 +1,4 @@
-import fs from "fs";
-import path from "path";
-
-const SETTINGS_FILE = path.join(process.cwd(), "data", "settings.json");
+import { supabaseAdmin } from "./supabase";
 
 export interface SiteSettings {
   heroImage: string;
@@ -24,17 +21,48 @@ const defaults: SiteSettings = {
 };
 
 export function readSettings(): SiteSettings {
-  try {
-    if (!fs.existsSync(SETTINGS_FILE)) return defaults;
-    return { ...defaults, ...JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf-8")) };
-  } catch {
-    return defaults;
-  }
+  const { data, error } = supabaseAdmin
+    .from("settings")
+    .select("*")
+    .eq("id", "site_settings")
+    .single();
+
+  if (error || !data) return defaults;
+
+  const row = data as Record<string, unknown>;
+  return {
+    heroImage: (row.hero_image as string) || defaults.heroImage,
+    heroCardTitle: (row.hero_card_title as string) || defaults.heroCardTitle,
+    heroCardPrice: (row.hero_card_price as string) || defaults.heroCardPrice,
+    siteName: (row.site_name as string) || defaults.siteName,
+    phone: (row.phone as string) || defaults.phone,
+    lineId: (row.line_id as string) || defaults.lineId,
+    address: (row.address as string) || defaults.address,
+  };
 }
 
 export function writeSettings(data: Partial<SiteSettings>): SiteSettings {
   const current = readSettings();
   const updated = { ...current, ...data };
-  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(updated, null, 2));
+
+  const row = {
+    id: "site_settings",
+    hero_image: updated.heroImage,
+    hero_card_title: updated.heroCardTitle,
+    hero_card_price: updated.heroCardPrice,
+    site_name: updated.siteName,
+    phone: updated.phone,
+    line_id: updated.lineId,
+    address: updated.address,
+    updated_at: new Date().toISOString(),
+  };
+
+  supabaseAdmin
+    .from("settings")
+    .upsert(row)
+    .then(({ error }) => {
+      if (error) console.error("writeSettings error:", error);
+    });
+
   return updated;
 }

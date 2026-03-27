@@ -1,80 +1,140 @@
-import fs from "fs";
-import path from "path";
+import { supabaseAdmin } from "./supabase";
 import { Product } from "./types";
 
-const DATA_FILE = path.join(process.cwd(), "data", "products.json");
+// Convert snake_case from DB to camelCase for app
+function mapRowToProduct(row: Record<string, unknown>): Product {
+  return {
+    id: row.id as string,
+    title: row.title as string,
+    brand: (row.brand as string) || "",
+    category: (row.category as Product["category"]) || "accessory",
+    type: (row.type as Product["type"]) || "sale",
+    condition: (row.condition as Product["condition"]) || "good",
+    salePrice: (row.sale_price as number) ?? null,
+    originalPrice: (row.original_price as number) ?? null,
+    rentPricePerDay: (row.rent_price_per_day as number) ?? null,
+    rentPricePerWeek: (row.rent_price_per_week as number) ?? null,
+    rentPricePerMonth: (row.rent_price_per_month as number) ?? null,
+    description: (row.description as string) || "",
+    features: (row.features as string[]) || [],
+    specs: (row.specs as Record<string, string>) || {},
+    images: (row.images as string[]) || [],
+    status: (row.status as Product["status"]) || "active",
+    featured: (row.featured as boolean) || false,
+    stockQuantity: (row.stock_quantity as number) ?? 1,
+    views: (row.views as number) ?? 0,
+    createdAt: row.created_at as string,
+    updatedAt: row.updated_at as string,
+  };
+}
 
-function ensureDataFile() {
-  const dir = path.dirname(DATA_FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, "[]");
+// Convert camelCase to snake_case for DB
+function mapProductToRow(p: Partial<Product>): Record<string, unknown> {
+  const row: Record<string, unknown> = {};
+  if (p.title !== undefined) row.title = p.title;
+  if (p.brand !== undefined) row.brand = p.brand;
+  if (p.category !== undefined) row.category = p.category;
+  if (p.type !== undefined) row.type = p.type;
+  if (p.condition !== undefined) row.condition = p.condition;
+  if (p.salePrice !== undefined) row.sale_price = p.salePrice;
+  if (p.originalPrice !== undefined) row.original_price = p.originalPrice;
+  if (p.rentPricePerDay !== undefined) row.rent_price_per_day = p.rentPricePerDay;
+  if (p.rentPricePerWeek !== undefined) row.rent_price_per_week = p.rentPricePerWeek;
+  if (p.rentPricePerMonth !== undefined) row.rent_price_per_month = p.rentPricePerMonth;
+  if (p.description !== undefined) row.description = p.description;
+  if (p.features !== undefined) row.features = p.features;
+  if (p.specs !== undefined) row.specs = p.specs;
+  if (p.images !== undefined) row.images = p.images;
+  if (p.status !== undefined) row.status = p.status;
+  if (p.featured !== undefined) row.featured = p.featured;
+  if (p.stockQuantity !== undefined) row.stock_quantity = p.stockQuantity;
+  if (p.views !== undefined) row.views = p.views;
+  return row;
 }
 
 export function readProducts(): Product[] {
-  ensureDataFile();
-  try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
-  } catch {
+  const { data, error } = supabaseAdmin
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error || !data) {
+    console.error("readProducts error:", error);
     return [];
   }
-}
 
-export function writeProducts(products: Product[]): void {
-  ensureDataFile();
-  fs.writeFileSync(DATA_FILE, JSON.stringify(products, null, 2));
+  return data.map(mapRowToProduct);
 }
 
 export function getProduct(id: string): Product | null {
-  return readProducts().find((p) => p.id === id) ?? null;
+  const { data, error } = supabaseAdmin
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error || !data) return null;
+  return mapRowToProduct(data as Record<string, unknown>);
 }
 
 export function createProduct(
   data: Omit<Product, "id" | "createdAt" | "updatedAt" | "views">
 ): Product {
-  const products = readProducts();
-  const product: Product = {
-    ...data,
-    id: `p${Date.now()}`,
-    stockQuantity: data.stockQuantity ?? 1,
+  const id = `p${Date.now()}`;
+  const now = new Date().toISOString();
+
+  const row = {
+    ...mapProductToRow(data),
+    id,
     views: 0,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    created_at: now,
+    updated_at: now,
   };
-  products.push(product);
-  writeProducts(products);
-  return product;
+
+  const { data: result, error } = supabaseAdmin
+    .from("products")
+    .insert(row)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("createProduct error:", error);
+    throw error;
+  }
+
+  return mapRowToProduct(result as Record<string, unknown>);
 }
 
 export function updateProduct(
   id: string,
   data: Partial<Omit<Product, "id" | "createdAt">>
 ): Product | null {
-  const products = readProducts();
-  const index = products.findIndex((p) => p.id === id);
-  if (index === -1) return null;
-  products[index] = {
-    ...products[index],
-    ...data,
-    updatedAt: new Date().toISOString(),
-  };
-  writeProducts(products);
-  return products[index];
+  const { data: result, error } = supabaseAdmin
+    .from("products")
+    .update({ ...mapProductToRow(data), updated_at: new Date().toISOString() })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error || !result) {
+    console.error("updateProduct error:", error);
+    return null;
+  }
+
+  return mapRowToProduct(result as Record<string, unknown>);
 }
 
 export function deleteProduct(id: string): boolean {
-  const products = readProducts();
-  const index = products.findIndex((p) => p.id === id);
-  if (index === -1) return false;
-  products.splice(index, 1);
-  writeProducts(products);
+  const { error } = supabaseAdmin.from("products").delete().eq("id", id);
+  if (error) {
+    console.error("deleteProduct error:", error);
+    return false;
+  }
   return true;
 }
 
 export function incrementViews(id: string): void {
-  const products = readProducts();
-  const index = products.findIndex((p) => p.id === id);
-  if (index !== -1) {
-    products[index].views = (products[index].views || 0) + 1;
-    writeProducts(products);
-  }
+  supabaseAdmin.rpc("increment_views", { product_id: id }).catch((err) => {
+    console.error("incrementViews error:", err);
+  });
 }
