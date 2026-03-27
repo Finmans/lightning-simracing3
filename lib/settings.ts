@@ -20,8 +20,8 @@ const defaults: SiteSettings = {
   address: "กรุงเทพมหานคร และปริมณฑล",
 };
 
-export function readSettings(): SiteSettings {
-  const { data, error } = supabaseAdmin
+export async function readSettings(): Promise<SiteSettings> {
+  const { data, error } = await supabaseAdmin
     .from("settings")
     .select("*")
     .eq("id", "site_settings")
@@ -41,8 +41,8 @@ export function readSettings(): SiteSettings {
   };
 }
 
-export function writeSettings(data: Partial<SiteSettings>): SiteSettings {
-  const current = readSettings();
+export async function writeSettings(data: Partial<SiteSettings>): Promise<SiteSettings> {
+  const current = await readSettings();
   const updated = { ...current, ...data };
 
   const row = {
@@ -57,12 +57,9 @@ export function writeSettings(data: Partial<SiteSettings>): SiteSettings {
     updated_at: new Date().toISOString(),
   };
 
-  supabaseAdmin
+  await supabaseAdmin
     .from("settings")
-    .upsert(row)
-    .then(({ error }) => {
-      if (error) console.error("writeSettings error:", error);
-    });
+    .upsert(row);
 
   return updated;
 }

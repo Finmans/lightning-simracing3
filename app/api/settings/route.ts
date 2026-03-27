@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { readSettings, writeSettings } from "@/lib/settings";
 
 export async function GET() {
-  return NextResponse.json(readSettings());
+  return NextResponse.json(await readSettings());
 }
 
 export async function PUT(req: NextRequest) {
@@ -12,6 +12,6 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const data = await req.json();
-  const updated = writeSettings(data);
+  const updated = await writeSettings(data);
   return NextResponse.json(updated);
 }

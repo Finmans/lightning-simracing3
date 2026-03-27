@@ -15,7 +15,7 @@ export default async function RentPage({
   searchParams: Promise<{ category?: string; brand?: string; q?: string }>;
 }) {
   const sp = await searchParams;
-  const allProducts = readProducts().filter(
+  const allProducts = (await readProducts()).filter(
     (p) => p.type === "rent" && p.status === "active"
   );
 

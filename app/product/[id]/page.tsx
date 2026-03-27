@@ -11,10 +11,10 @@ export const dynamic = "force-dynamic";
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
   if (!product || product.status === "inactive") notFound();
 
-  const allProducts = readProducts().filter(
+  const allProducts = (await readProducts()).filter(
     (p) => p.id !== id && p.status === "active" && p.brand === product.brand
   ).slice(0, 4);
 

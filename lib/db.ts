@@ -52,8 +52,8 @@ function mapProductToRow(p: Partial<Product>): Record<string, unknown> {
   return row;
 }
 
-export function readProducts(): Product[] {
-  const { data, error } = supabaseAdmin
+export async function readProducts(): Promise<Product[]> {
+  const { data, error } = await supabaseAdmin
     .from("products")
     .select("*")
     .order("created_at", { ascending: false });
@@ -63,11 +63,11 @@ export function readProducts(): Product[] {
     return [];
   }
 
-  return data.map(mapRowToProduct);
+  return data.map((row) => mapRowToProduct(row as Record<string, unknown>));
 }
 
-export function getProduct(id: string): Product | null {
-  const { data, error } = supabaseAdmin
+export async function getProduct(id: string): Promise<Product | null> {
+  const { data, error } = await supabaseAdmin
     .from("products")
     .select("*")
     .eq("id", id)
@@ -77,9 +77,9 @@ export function getProduct(id: string): Product | null {
   return mapRowToProduct(data as Record<string, unknown>);
 }
 
-export function createProduct(
+export async function createProduct(
   data: Omit<Product, "id" | "createdAt" | "updatedAt" | "views">
-): Product {
+): Promise<Product> {
   const id = `p${Date.now()}`;
   const now = new Date().toISOString();
 
@@ -91,7 +91,7 @@ export function createProduct(
     updated_at: now,
   };
 
-  const { data: result, error } = supabaseAdmin
+  const { data: result, error } = await supabaseAdmin
     .from("products")
     .insert(row)
     .select()
@@ -105,11 +105,11 @@ export function createProduct(
   return mapRowToProduct(result as Record<string, unknown>);
 }
 
-export function updateProduct(
+export async function updateProduct(
   id: string,
   data: Partial<Omit<Product, "id" | "createdAt">>
-): Product | null {
-  const { data: result, error } = supabaseAdmin
+): Promise<Product | null> {
+  const { data: result, error } = await supabaseAdmin
     .from("products")
     .update({ ...mapProductToRow(data), updated_at: new Date().toISOString() })
     .eq("id", id)
@@ -124,8 +124,8 @@ export function updateProduct(
   return mapRowToProduct(result as Record<string, unknown>);
 }
 
-export function deleteProduct(id: string): boolean {
-  const { error } = supabaseAdmin.from("products").delete().eq("id", id);
+export async function deleteProduct(id: string): Promise<boolean> {
+  const { error } = await supabaseAdmin.from("products").delete().eq("id", id);
   if (error) {
     console.error("deleteProduct error:", error);
     return false;
@@ -133,8 +133,10 @@ export function deleteProduct(id: string): boolean {
   return true;
 }
 
-export function incrementViews(id: string): void {
-  supabaseAdmin.rpc("increment_views", { product_id: id }).catch((err) => {
+export async function incrementViews(id: string): Promise<void> {
+  try {
+    await supabaseAdmin.rpc("increment_views", { product_id: id });
+  } catch (err) {
     console.error("incrementViews error:", err);
-  });
+  }
 }

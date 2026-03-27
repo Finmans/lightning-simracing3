@@ -9,7 +9,7 @@ export default async function Dashboard() {
   const cookieStore = await cookies();
   if (cookieStore.get("admin_token")?.value !== process.env.ADMIN_SECRET) redirect("/admin/login");
 
-  const products = readProducts();
+  const products = await readProducts();
   const forSale = products.filter((p) => (p.type === "sale" || p.type === "both") && p.status === "active");
   const forRent = products.filter((p) => (p.type === "rent" || p.type === "both") && p.status === "active");
   const sold = products.filter((p) => p.status === "sold");

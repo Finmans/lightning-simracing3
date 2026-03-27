@@ -3,8 +3,8 @@ import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { ShoppingBag, RotateCcw, ArrowRight } from "lucide-react";
 
-export default function FeaturedProducts() {
-  const products = readProducts().filter((p) => p.featured && p.status === "active");
+export default async function FeaturedProducts() {
+  const products = (await readProducts()).filter((p) => p.featured && p.status === "active");
   const forSale = products.filter((p) => p.type === "sale").slice(0, 4);
   const forRent = products.filter((p) => p.type === "rent").slice(0, 4);
 

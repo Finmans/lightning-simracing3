@@ -14,8 +14,8 @@ import { readSettings } from "@/lib/settings";
 
 export const dynamic = "force-dynamic";
 
-export default function Home() {
-  const settings = readSettings();
+export default async function Home() {
+  const settings = await readSettings();
   return (
     <main className="min-h-screen bg-black">
       <ScrollProgress />

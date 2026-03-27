@@ -12,7 +12,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
   if (!product) return NextResponse.json({ error: "Not found" }, { status: 404 });
   incrementViews(id);
   return NextResponse.json(product);
@@ -25,7 +25,7 @@ export async function PUT(
   if (!await isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
   const body = await req.json();
-  const product = updateProduct(id, body);
+  const product = await updateProduct(id, body);
   if (!product) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json(product);
 }
@@ -36,7 +36,7 @@ export async function DELETE(
 ) {
   if (!await isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
-  const ok = deleteProduct(id);
+  const ok = await deleteProduct(id);
   if (!ok) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({ success: true });
 }

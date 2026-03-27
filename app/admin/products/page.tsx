@@ -11,7 +11,7 @@ export default async function AdminProducts() {
   const cookieStore = await cookies();
   if (cookieStore.get("admin_token")?.value !== process.env.ADMIN_SECRET) redirect("/admin/login");
 
-  const products = readProducts();
+  const products = await readProducts();
 
   return (
     <div className="min-h-screen bg-[#0A0A0F]">

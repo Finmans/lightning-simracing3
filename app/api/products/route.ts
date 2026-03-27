@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   const featured = searchParams.get("featured");
   const status = searchParams.get("status");
 
-  let products = readProducts();
+  let products = await readProducts();
 
   if (type) products = products.filter((p) => p.type === type || p.type === "both");
   if (category) products = products.filter((p) => p.category === category);
@@ -30,6 +30,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const body = await req.json();
-  const product = createProduct(body);
+  const product = await createProduct(body);
   return NextResponse.json(product, { status: 201 });
 }

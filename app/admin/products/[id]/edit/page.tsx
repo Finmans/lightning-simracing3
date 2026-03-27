@@ -11,7 +11,7 @@ export default async function EditProduct({ params }: { params: Promise<{ id: st
   if (cookieStore.get("admin_token")?.value !== process.env.ADMIN_SECRET) redirect("/admin/login");
 
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
   if (!product) notFound();
 
   return (
