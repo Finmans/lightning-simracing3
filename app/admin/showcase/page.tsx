@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import AdminNav from "@/components/admin/AdminNav";
-import { Upload, X, Save, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Upload, Save, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import Image from "next/image";
 
 interface ShowcaseProduct {
@@ -19,14 +18,12 @@ interface ShowcaseProduct {
 }
 
 export default function AdminShowcase() {
-  const router = useRouter();
   const [products, setProducts] = useState<ShowcaseProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
   const [uploadingFor, setUploadingFor] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchProducts();
@@ -46,8 +43,8 @@ export default function AdminShowcase() {
     }
   }
 
-  async function handleImageUpload(productId: string, files: FileList) {
-    const file = files[0];
+  async function handleImageUpload(productId: string, e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
@@ -78,6 +75,8 @@ export default function AdminShowcase() {
       setError("เกิดข้อผิดพลาด");
     } finally {
       setUploadingFor(null);
+      // Reset input so same file can be selected again
+      e.target.value = "";
     }
   }
 
@@ -152,7 +151,7 @@ export default function AdminShowcase() {
               <div className="flex items-start gap-6">
                 {/* Image */}
                 <div className="flex-shrink-0">
-                  <div className="relative w-40 h-28 rounded-xl overflow-hidden bg-[#1E293B] group">
+                  <label className="relative block w-40 h-28 rounded-xl overflow-hidden bg-[#1E293B] cursor-pointer group">
                     <Image
                       src={product.productImage}
                       alt={product.productName}
@@ -160,28 +159,21 @@ export default function AdminShowcase() {
                       className="object-cover"
                       unoptimized
                     />
-                    <input
-                      ref={fileRef}
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={(e) =>
-                        e.target.files && handleImageUpload(product.id, e.target.files)
-                      }
-                    />
-                    <button
-                      type="button"
-                      onClick={() => fileRef.current?.click()}
-                      disabled={uploadingFor === product.id}
-                      className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-100"
-                    >
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       {uploadingFor === product.id ? (
                         <Loader2 className="w-6 h-6 text-white animate-spin" />
                       ) : (
                         <Upload className="w-6 h-6 text-white" />
                       )}
-                    </button>
-                  </div>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => handleImageUpload(product.id, e)}
+                      disabled={uploadingFor === product.id}
+                    />
+                  </label>
                   <p className="text-xs text-[#374151] mt-2 text-center">คลิกเปลี่ยนรูป</p>
                 </div>
 
