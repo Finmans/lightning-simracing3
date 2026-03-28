@@ -61,7 +61,7 @@ export default function AdminShowcase() {
     try {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const res = await fetch("/api/upload", { method: "POST", body: fd, credentials: "include" });
 
       if (res.ok) {
         const { url } = await res.json();
