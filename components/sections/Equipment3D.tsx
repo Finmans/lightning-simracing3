@@ -1,14 +1,118 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, ChevronRight, Gauge, Monitor, Gamepad2 } from "lucide-react";
-import { equipmentBrands } from "@/lib/mock-data";
+import { Zap, ChevronRight, Gauge, Gamepad2, Loader2 } from "lucide-react";
 import Image from "next/image";
 
+interface ShowcaseProduct {
+  id: string;
+  brandId: string;
+  brandName: string;
+  brandColor: string;
+  productName: string;
+  productType: string;
+  productImage: string;
+  productHighlight: string;
+  sortOrder: number;
+}
+
+interface Brand {
+  id: string;
+  name: string;
+  logo: string;
+  color: string;
+  description: string;
+  products: ShowcaseProduct[];
+}
+
+// Fallback data if API fails
+const fallbackBrands: Brand[] = [
+  {
+    id: "fanatec",
+    name: "FANATEC",
+    logo: "F",
+    color: "#3B82F6",
+    description: "แบรนด์ชั้นนำระดับโลกสำหรับ Sim Racing อุปกรณ์ Direct Drive คุณภาพสูง",
+    products: [
+      {
+        id: "showcase-1",
+        brandId: "fanatec",
+        brandName: "FANATEC",
+        brandColor: "#3B82F6",
+        productName: "GT DD Pro",
+        productType: "Wheel Base",
+        productImage: "https://images.unsplash.com/photo-1570352481356-e633565f3b5c?w=400&auto=format&fit=crop",
+        productHighlight: "8Nm Direct Drive",
+        sortOrder: 1,
+      },
+      {
+        id: "showcase-2",
+        brandId: "fanatec",
+        brandName: "FANATEC",
+        brandColor: "#3B82F6",
+        productName: "CSL DD+",
+        productType: "Wheel Base",
+        productImage: "https://images.unsplash.com/photo-1614609953905-baeff400aab3?w=400&auto=format&fit=crop",
+        productHighlight: "15Nm Force Feedback",
+        sortOrder: 2,
+      },
+      {
+        id: "showcase-3",
+        brandId: "fanatec",
+        brandName: "FANATEC",
+        brandColor: "#3B82F6",
+        productName: "Clubsport V3",
+        productType: "Pedals",
+        productImage: "https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=400&auto=format",
+        productHighlight: "LoadCell Brake",
+        sortOrder: 3,
+      },
+    ],
+  },
+];
+
 export default function Equipment3D() {
-  const [activeBrand, setActiveBrand] = useState(equipmentBrands[0]);
+  const [brands, setBrands] = useState<Brand[]>(fallbackBrands);
+  const [activeBrand, setActiveBrand] = useState<Brand>(fallbackBrands[0]);
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("/api/showcase");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.products && data.products.length > 0) {
+            // Group products by brand
+            const brandMap = new Map<string, Brand>();
+            data.products.forEach((p: ShowcaseProduct) => {
+              if (!brandMap.has(p.brandId)) {
+                brandMap.set(p.brandId, {
+                  id: p.brandId,
+                  name: p.brandName,
+                  logo: p.brandName[0],
+                  color: p.brandColor,
+                  description: "",
+                  products: [],
+                });
+              }
+              brandMap.get(p.brandId)!.products.push(p);
+            });
+            const groupedBrands = Array.from(brandMap.values());
+            setBrands(groupedBrands);
+            setActiveBrand(groupedBrands[0]);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch showcase:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <section id="equipment" className="py-28 relative overflow-hidden">
@@ -22,7 +126,7 @@ export default function Equipment3D() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
       </div>
 
-      {/* Orbit rings – subtle behind content */}
+      {/* Orbit rings */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden" style={{ perspective: "1000px" }}>
         <div className="absolute w-[900px] h-[900px] ring-z opacity-30" style={{ transformStyle: "preserve-3d" }}>
           <div className="absolute inset-0 rounded-full" style={{ border: `1px solid ${activeBrand.color}15` }} />
@@ -79,7 +183,7 @@ export default function Equipment3D() {
           transition={{ delay: 0.2 }}
           className="flex justify-center gap-3 mb-14"
         >
-          {equipmentBrands.map((brand) => {
+          {brands.map((brand) => {
             const isActive = activeBrand.id === brand.id;
             return (
               <button
@@ -105,8 +209,6 @@ export default function Equipment3D() {
                     transition={{ type: "spring", bounce: 0.25, duration: 0.6 }}
                   />
                 )}
-
-                {/* Brand logo initial */}
                 <div className="relative flex items-center gap-3">
                   <div
                     className="h-10 w-10 rounded-lg flex items-center justify-center text-lg font-black border border-dashed transition-all"
@@ -155,29 +257,29 @@ export default function Equipment3D() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
               {activeBrand.products.map((product, i) => (
                 <motion.div
-                  key={product.name}
+                  key={product.id}
                   initial={{ opacity: 0, rotateY: -15, y: 40 }}
                   animate={{ opacity: 1, rotateY: 0, y: 0 }}
                   transition={{ duration: 0.6, delay: i * 0.15 }}
-                  onMouseEnter={() => setHoveredProduct(product.name)}
+                  onMouseEnter={() => setHoveredProduct(product.productName)}
                   onMouseLeave={() => setHoveredProduct(null)}
                   className="group preserve-3d"
                 >
                   <motion.div
                     animate={{
-                      rotateY: hoveredProduct === product.name ? 5 : 0,
-                      rotateX: hoveredProduct === product.name ? -3 : 0,
-                      scale: hoveredProduct === product.name ? 1.03 : 1,
+                      rotateY: hoveredProduct === product.productName ? 5 : 0,
+                      rotateX: hoveredProduct === product.productName ? -3 : 0,
+                      scale: hoveredProduct === product.productName ? 1.03 : 1,
                     }}
                     transition={{ type: "spring", stiffness: 200, damping: 20 }}
                     className="relative bg-[#0A0A1A] border border-dashed rounded-2xl overflow-hidden transition-colors"
                     style={{
                       borderColor:
-                        hoveredProduct === product.name
+                        hoveredProduct === product.productName
                           ? `${activeBrand.color}60`
                           : "#1A1A2E",
                       boxShadow:
-                        hoveredProduct === product.name
+                        hoveredProduct === product.productName
                           ? `0 20px 60px ${activeBrand.color}15, 0 0 30px ${activeBrand.color}10`
                           : "none",
                     }}
@@ -192,34 +294,33 @@ export default function Equipment3D() {
                           backgroundColor: `${activeBrand.color}10`,
                         }}
                       >
-                        {product.type}
+                        {product.productType}
                       </span>
                     </div>
 
-                    {/* Image with 3D depth effect */}
+                    {/* Image */}
                     <div className="relative aspect-[4/3] w-full overflow-hidden bg-black">
                       <Image
-                        src={product.image}
-                        alt={product.name}
+                        src={product.productImage}
+                        alt={product.productName}
                         fill
                         className="object-cover opacity-60 group-hover:opacity-85 group-hover:scale-110 transition-all duration-700"
                         sizes="(max-width: 768px) 100vw, 33vw"
+                        unoptimized
                       />
-                      {/* Radial glow overlay */}
                       <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                         style={{
                           background: `radial-gradient(circle at center, ${activeBrand.color}15 0%, transparent 70%)`,
                         }}
                       />
-                      {/* Bottom gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A1A] via-transparent to-transparent" />
                     </div>
 
                     {/* Content */}
                     <div className="p-5">
                       <h3 className="text-white text-xl font-black uppercase mb-1 group-hover:text-glow-white transition-all">
-                        {product.name}
+                        {product.productName}
                       </h3>
                       <div className="flex items-center gap-2 mb-3">
                         <Gauge
@@ -230,7 +331,7 @@ export default function Equipment3D() {
                           className="text-sm font-bold"
                           style={{ color: activeBrand.color }}
                         >
-                          {product.highlight}
+                          {product.productHighlight}
                         </span>
                       </div>
 
@@ -248,7 +349,7 @@ export default function Equipment3D() {
                       </div>
                     </div>
 
-                    {/* Animated corner accent */}
+                    {/* Corner accents */}
                     <div
                       className="absolute top-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{

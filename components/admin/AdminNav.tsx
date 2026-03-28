@@ -4,11 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { LayoutDashboard, Package, LogOut, Menu, X, ExternalLink, Settings } from "lucide-react";
+import { LayoutDashboard, Package, LogOut, Menu, X, ExternalLink, Settings, LayoutGrid } from "lucide-react";
 
 const navItems = [
   { href: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/admin/products", icon: Package, label: "สินค้า" },
+  { href: "/admin/showcase", icon: LayoutGrid, label: "หน้าแรก" },
   { href: "/admin/settings", icon: Settings, label: "ตั้งค่าเว็บ" },
 ];
 
