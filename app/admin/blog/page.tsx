@@ -320,24 +320,85 @@ export default function AdminBlog() {
 
               <div>
                 <label className="block text-sm text-[#9CA3AF] mb-2">รูปภาพ</label>
-                <input
-                  type="url"
-                  value={form.image}
-                  onChange={(e) => setForm({ ...form, image: e.target.value })}
-                  className="w-full bg-[#0A0A0F] border border-[#1E293B] rounded-xl px-4 py-3 text-white focus:border-[#A855F7] focus:outline-none"
-                  placeholder="https://..."
-                />
-                <div className="flex gap-2 mt-2 flex-wrap">
-                  {SAMPLE_IMAGES.map((img, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setForm({ ...form, image: img })}
-                      className={`w-16 h-12 rounded-lg overflow-hidden border-2 ${form.image === img ? "border-[#A855F7]" : "border-transparent"}`}
+                <div className="space-y-3">
+                  {/* URL Input */}
+                  <input
+                    type="url"
+                    value={form.image}
+                    onChange={(e) => setForm({ ...form, image: e.target.value })}
+                    className="w-full bg-[#0A0A0F] border border-[#1E293B] rounded-xl px-4 py-3 text-white focus:border-[#A855F7] focus:outline-none"
+                    placeholder="https://... หรืออัพโหลดรูปด้านล่าง"
+                  />
+                  
+                  {/* Image Preview */}
+                  {form.image && (
+                    <div className="relative w-full h-40 rounded-xl overflow-hidden bg-[#0A0A0F] border border-[#1E293B]">
+                      <img src={form.image} alt="Preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setForm({ ...form, image: "" })}
+                        className="absolute top-2 right-2 p-1.5 bg-black/70 rounded-lg text-white hover:bg-red-500"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Upload Button */}
+                  <div>
+                    <input
+                      type="file"
+                      id="blog-image-upload"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        
+                        const formData = new FormData();
+                        formData.append("file", file);
+                        
+                        try {
+                          const res = await fetch("/api/upload", {
+                            method: "POST",
+                            body: formData,
+                          });
+                          const data = await res.json();
+                          if (data.url) {
+                            setForm({ ...form, image: data.url });
+                          } else {
+                            alert("อัพโหลดไม่สำเร็จ: " + (data.error || "Unknown error"));
+                          }
+                        } catch (err) {
+                          alert("เกิดข้อผิดพลาด");
+                        }
+                      }}
+                    />
+                    <label
+                      htmlFor="blog-image-upload"
+                      className="flex items-center justify-center gap-2 w-full py-3 border-2 border-dashed border-[#A855F7]/50 text-[#A855F7] rounded-xl cursor-pointer hover:bg-[#A855F7]/10 transition-all"
                     >
-                      <img src={img} className="w-full h-full object-cover" />
-                    </button>
-                  ))}
+                      <Image className="w-5 h-5" />
+                      อัพโหลดรูปจากคอมพิวเตอร์
+                    </label>
+                  </div>
+
+                  {/* Sample Images */}
+                  <div>
+                    <p className="text-xs text-[#6B7280] mb-2">หรือเลือกจาก presets:</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {SAMPLE_IMAGES.map((img, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setForm({ ...form, image: img })}
+                          className={`w-16 h-12 rounded-lg overflow-hidden border-2 ${form.image === img ? "border-[#A855F7]" : "border-transparent"}`}
+                        >
+                          <img src={img} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
