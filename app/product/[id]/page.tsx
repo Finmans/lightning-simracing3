@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getProduct, readProducts } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { CATEGORY_LABELS, CONDITION_LABELS, CONDITION_COLORS } from "@/lib/types";
@@ -6,6 +7,43 @@ import Footer from "@/components/shared/Footer";
 import ProductImages from "@/components/sections/ProductImages";
 import Link from "next/link";
 import { ChevronLeft, MessageCircle, Phone, CheckCircle, Truck, ShieldCheck, Tag } from "lucide-react";
+import { ProductJsonLd, BreadcrumbJsonLd } from "@/components/seo/StructuredData";
+
+const BASE_URL = "https://lightning-simracing.vercel.app";
+
+type Props = { params: Promise<{ id: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const product = await getProduct(id);
+  if (!product) return { title: "ไม่พบสินค้า" };
+
+  const title = product.title;
+  const description = `${product.description} | ${product.brand} สภาพ${CONDITION_LABELS[product.condition]} ราคา ฿${(product.salePrice ?? product.rentPricePerDay ?? 0).toLocaleString()}`;
+  const image = product.images[0] || `${BASE_URL}/og-image.jpg`;
+
+  return {
+    title,
+    description,
+    keywords: [product.brand, product.title, ...product.features],
+    openGraph: {
+      title: `${title} | Lightning SimRacing`,
+      description,
+      url: `${BASE_URL}/product/${id}`,
+      type: "website",
+      images: [{ url: image, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Lightning SimRacing`,
+      description,
+      images: [image],
+    },
+    alternates: {
+      canonical: `${BASE_URL}/product/${id}`,
+    },
+  };
+}
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +68,15 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
+      <ProductJsonLd product={product} baseUrl={BASE_URL} />
+      <BreadcrumbJsonLd
+        baseUrl={BASE_URL}
+        items={[
+          { name: "หน้าแรก", url: BASE_URL },
+          { name: product.type === "rent" ? "เช่าอุปกรณ์" : "ซื้อสินค้า", url: product.type === "rent" ? `${BASE_URL}/rent` : `${BASE_URL}/shop` },
+          { name: product.title, url: `${BASE_URL}/product/${id}` },
+        ]}
+      />
       <main className="pt-20 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           {/* Breadcrumb */}

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { readProducts } from "@/lib/db";
 import { ProductCategory } from "@/lib/types";
 import Navbar from "@/components/shared/Navbar";
@@ -6,6 +7,38 @@ import ProductCard from "@/components/sections/ProductCard";
 import ShopFilters from "@/components/sections/ShopFilters";
 import Link from "next/link";
 import { Tag, RotateCcw, ChevronRight, Truck, Clock, Shield } from "lucide-react";
+
+const BASE_URL = "https://lightning-simracing.vercel.app";
+const SITE_NAME = "Lightning SimRacing";
+
+export const metadata: Metadata = {
+  title: `เช่าอุปกรณ์ Sim Racing | ${SITE_NAME}`,
+  description:
+    "เช่าอุปกรณ์ Sim Racing รายวัน รายสัปดาห์ รายเดือน จัดส่งและติดตั้งฟรีถึงบ้านในกรุงเทพและปริมณฑล มี Fanatec, Simagic, Moza, NLR ให้เลือก",
+  keywords: [
+    "เช่า sim racing",
+    "เช่า direct drive wheel",
+    "เช่า sim racing กรุงเทพ",
+    "เช่า fanatec",
+    "เช่า simagic",
+    "เช่า moza",
+    "เช่า cockpit",
+  ],
+  openGraph: {
+    title: `เช่าอุปกรณ์ Sim Racing | ${SITE_NAME}`,
+    description: "เช่าอุปกรณ์ Sim Racing รายวัน รายสัปดาห์ รายเดือน จัดส่งติดตั้งฟรี",
+    url: `${BASE_URL}/rent`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `เช่าอุปกรณ์ Sim Racing | ${SITE_NAME}`,
+    description: "เช่าอุปกรณ์ Sim Racing รายวัน รายสัปดาห์ รายเดือน จัดส่งติดตั้งฟรี",
+  },
+  alternates: {
+    canonical: `${BASE_URL}/rent`,
+  },
+};
 
 export const dynamic = "force-dynamic";
 

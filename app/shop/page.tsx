@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { readProducts } from "@/lib/db";
 import { ProductCategory } from "@/lib/types";
 import Navbar from "@/components/shared/Navbar";
@@ -6,6 +7,37 @@ import ProductCard from "@/components/sections/ProductCard";
 import ShopFilters from "@/components/sections/ShopFilters";
 import Link from "next/link";
 import { Tag, RotateCcw, ShoppingBag, ChevronRight } from "lucide-react";
+
+const BASE_URL = "https://lightning-simracing.vercel.app";
+const SITE_NAME = "Lightning SimRacing";
+
+export const metadata: Metadata = {
+  title: `ซื้อสินค้ามือสอง | ${SITE_NAME}`,
+  description:
+    "ซื้อสินค้าอุปกรณ์ Sim Racing มือสอง Fanatec, Simagic, Moza, Logitech สภาพดี ราคาคุ้มค่า มีรูปจริง พร้อมส่ง จัดส่งฟรี ติดตั้งฟรีในกรุงเทพและปริมณฑล",
+  keywords: [
+    "ซื้อ sim racing มือสอง",
+    "fanatec มือสอง",
+    "simagic มือสอง",
+    "moza มือสอง",
+    "direct drive wheel มือสอง",
+    "sim racing bundle",
+  ],
+  openGraph: {
+    title: `ซื้อสินค้ามือสอง | ${SITE_NAME}`,
+    description: "อุปกรณ์ Sim Racing มือสอง สภาพดี ราคาคุ้มค่า จัดส่งฟรี ติดตั้งฟรี",
+    url: `${BASE_URL}/shop`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `ซื้อสินค้ามือสอง | ${SITE_NAME}`,
+    description: "อุปกรณ์ Sim Racing มือสอง สภาพดี ราคาคุ้มค่า จัดส่งฟรี",
+  },
+  alternates: {
+    canonical: `${BASE_URL}/shop`,
+  },
+};
 
 export const dynamic = "force-dynamic";
 
