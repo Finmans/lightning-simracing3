@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, ShoppingBag, RotateCcw, Settings } from "lucide-react";
+import { Menu, X, Phone, ShoppingBag, RotateCcw, Settings, BookOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   { href: "/shop", label: "ซื้อสินค้า", icon: ShoppingBag },
   { href: "/rent", label: "เช่าอุปกรณ์", icon: RotateCcw },
+  { href: "/blog", label: "บทความ", icon: BookOpen },
   { href: "/#how-it-works", label: "วิธีสั่งซื้อ", icon: null },
   { href: "/#contact", label: "ติดต่อ", icon: null },
 ];
@@ -119,7 +120,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#3B82F6] transition-colors py-2.5 border-b border-dashed border-[#1A1A2E]"
+                  className="flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#A855F7] transition-colors py-2.5 border-b border-dashed border-[#1A1A2E]"
                 >
                   {link.icon && <link.icon className="w-4 h-4" />}
                   {link.label}

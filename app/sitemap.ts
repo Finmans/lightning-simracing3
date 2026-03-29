@@ -3,6 +3,8 @@ import { readProducts } from "@/lib/db";
 
 const BASE_URL = "https://lightning-simracing.vercel.app";
 
+const blogData = require("@/data/posts.json");
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await readProducts();
 
@@ -25,6 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9,
     },
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
   ];
 
   const productRoutes: MetadataRoute.Sitemap = products
@@ -36,5 +44,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: product.featured ? 0.8 : 0.7,
     }));
 
-  return [...staticRoutes, ...productRoutes];
+  const blogRoutes: MetadataRoute.Sitemap = blogData.map((post: any) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: "monthly" as const,
+    priority: post.featured ? 0.8 : 0.6,
+  }));
+
+  return [...staticRoutes, ...productRoutes, ...blogRoutes];
 }
