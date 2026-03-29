@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "ซื้อขายอุปกรณ์ Sim Racing มือสอง Fanatec, Simagic, Moza สภาพดี ราคาคุ้มค่า และบริการเช่าถึงบ้านในกรุงเทพและปริมณฑล",
   keywords: ["sim racing มือสอง", "ซื้อ sim racing", "เช่า sim racing", "fanatec ไทย", "simagic ไทย", "moza ไทย"],
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.ico",
   },
 };
 
